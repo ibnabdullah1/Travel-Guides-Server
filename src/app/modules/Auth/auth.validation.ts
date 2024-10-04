@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { z } from 'zod';
 
 const registerValidationSchema = z.object({
@@ -10,6 +11,16 @@ const registerValidationSchema = z.object({
     }),
     password: z.string({ required_error: 'Password is required' }),
     mobileNumber: z.string({ required_error: 'Mobile number is required' }),
+    follower: z.array(
+      z.string().refine((val) => mongoose.Types.ObjectId.isValid(val), {
+        message: 'follower array is required',
+      })
+    ),
+    following: z.array(
+      z.string().refine((val) => mongoose.Types.ObjectId.isValid(val), {
+        message: 'following array is required',
+      })
+    ),
     profilePhoto: z.string(),
   }),
 });

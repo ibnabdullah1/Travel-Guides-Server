@@ -1,12 +1,17 @@
 {
-  "name": "found-x-server",
+  "name": "travel-guide-server",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Next Level Developer",
   "license": "MIT",
   "scripts": {
     "start": "node dist/server.js",
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc",
+    "lint": "eslint src --ignore-path .eslintignore --ext .ts",
+    "lint:fix": "npx eslint src --fix",
+    "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
+    "prettier:fix": "npx prettier --write src"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

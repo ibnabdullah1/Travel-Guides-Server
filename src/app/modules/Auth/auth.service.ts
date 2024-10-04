@@ -5,10 +5,11 @@ import config from '../../config';
 import AppError from '../../errors/AppError';
 import { createToken } from '../../utils/verifyJWT';
 import { USER_ROLE } from '../User/user.constant';
+import { TUser } from '../User/user.interface';
 import { User } from '../User/user.model';
-import { TLoginUser, TRegisterUser } from './auth.interface';
+import { TLoginUser } from './auth.interface';
 
-const registerUser = async (payload: TRegisterUser) => {
+const registerUser = async (payload: TUser) => {
   // checking if the user is exist
   const user = await User.isUserExistsByEmail(payload?.email);
 
@@ -79,6 +80,7 @@ const loginUser = async (payload: TLoginUser) => {
     email: user.email,
     mobileNumber: user.mobileNumber,
     role: user.role,
+    profileUrl: user.profilePhoto,
     status: user.status,
   };
 

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unused-vars */
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { Application, NextFunction, Request, Response } from 'express';
@@ -10,7 +8,17 @@ import routes from './app/routes';
 
 const app: Application = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'http://localhost:3003',
+      'https://travel-guide-community.vercel.app',
+    ],
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 
 //parser
@@ -23,7 +31,7 @@ app.use('/api/v1', routes);
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
   res.status(httpStatus.OK).json({
     success: true,
-    message: 'Welcome to the Lost And Found API',
+    message: 'Welcome to the Travel Guide Community Server API',
   });
 });
 
