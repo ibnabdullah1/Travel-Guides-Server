@@ -19,8 +19,7 @@ const createPost = catchAsync(async (req, res) => {
   });
 });
 const getAllPost = catchAsync(async (req, res) => {
-  const result = await PostServices.getAllPostFromDB(req.query);
-
+  const result = await PostServices.getAllPostFromDB();
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -48,6 +47,17 @@ const updateSinglePost = catchAsync(async (req, res) => {
     success: true,
     statusCode: httpStatus.OK,
     message: 'Post Update successfully',
+    data: result,
+  });
+});
+const deleteSinglePost = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await PostServices.deleteSinglePostInDB(id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Post delete successfully',
     data: result,
   });
 });
@@ -108,4 +118,5 @@ export const PostControllers = {
   updateSinglePost,
   updateCommentInPost,
   addReactionInPost,
+  deleteSinglePost,
 };

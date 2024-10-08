@@ -30,5 +30,6 @@ router.put(
   auth(USER_ROLE.ADMIN, USER_ROLE.USER),
   UserControllers.addNewFollowUser
 );
+
 router.put('', auth(USER_ROLE.ADMIN), UserControllers.updateUserRole);
 router.delete('/:id', auth(USER_ROLE.ADMIN), UserControllers.deleteUser);

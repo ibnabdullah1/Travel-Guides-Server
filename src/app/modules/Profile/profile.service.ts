@@ -36,8 +36,23 @@ const updateMyProfile = async ({ user, image }: any) => {
 
   return result;
 };
+const verifyProfile = async ({ email }: any) => {
+  const filter = {
+    email: email,
+    status: USER_STATUS.ACTIVE,
+  };
+
+  const result = await User.findOneAndUpdate(
+    filter,
+    { isPremium: true },
+    { new: true }
+  );
+
+  return result;
+};
 
 export const ProfileServices = {
   getMyProfile,
   updateMyProfile,
+  verifyProfile,
 };

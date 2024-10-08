@@ -16,5 +16,10 @@ router.patch(
   auth(USER_ROLE.ADMIN, USER_ROLE.USER),
   ProfileController.updateMyProfile
 );
+router.put(
+  '/verified',
+  auth(USER_ROLE.ADMIN, USER_ROLE.USER),
+  ProfileController.verifyProfile
+);
 
 export const ProfileRoutes = router;

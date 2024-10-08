@@ -23,7 +23,7 @@ const getAllUsersFromDB = async (query: Record<string, unknown>) => {
 };
 
 const getSingleUserFromDB = async (id: string) => {
-  const user = await User.findById(id);
+  const user = await User.findById({ _id: id });
 
   return user;
 };

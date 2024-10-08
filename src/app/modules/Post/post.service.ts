@@ -1,8 +1,6 @@
 import httpStatus from 'http-status';
-import QueryBuilder from '../../builder/QueryBuilder';
 import AppError from '../../errors/AppError';
 import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
-import { PostSearchableFields } from './post.content';
 import { TComment, TPost } from './post.interface';
 import { Post } from './post.model';
 
@@ -20,21 +18,14 @@ const createPostIntoDB = async (payload: TPost, image: any) => {
   return result;
 };
 
-const getAllPostFromDB = async (query: Record<string, unknown>) => {
-  const postQuery = new QueryBuilder(Post.find().populate('authorId'), query)
-    .search(PostSearchableFields)
-    .filter()
-    .sort()
-    .paginate()
-    .fields();
-
-  const result = await postQuery.modelQuery;
+const getAllPostFromDB = async () => {
+  const result = await Post.find({ isDeleted: false }).populate('authorId');
 
   return result;
 };
 
 const getSinglePostInDB = async (id: string) => {
-  const result = await Post.findById({ _id: id })
+  const result = await Post.findById({ _id: id, isDeleted: false })
     .populate('authorId')
     .populate('comments.author');
 
@@ -47,6 +38,14 @@ const updateSinglePostInDB = async (itemId: string, payload: TPost) => {
   // } else {
   //   throw new Error(`Item with ID ${itemId} not found.`);
   // }
+  return result;
+};
+const deleteSinglePostInDB = async (itemId: string) => {
+  const result = await Post.findByIdAndUpdate(
+    itemId,
+    { isDeleted: true },
+    { new: true }
+  );
   return result;
 };
 
@@ -155,4 +154,5 @@ export const PostServices = {
   deleteCommentToPost,
   updateCommentToPost,
   addReactionToPost,
+  deleteSinglePostInDB,
 };

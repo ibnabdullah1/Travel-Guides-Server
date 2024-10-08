@@ -7,6 +7,7 @@ export const createToken = (
     name: string;
     email: string;
     mobileNumber?: string;
+    isPremium?: boolean;
     role: keyof typeof USER_ROLE;
     status: keyof typeof USER_STATUS;
   },

@@ -17,7 +17,7 @@ const router = express.Router();
 
 router.post(
   '/',
-  auth(USER_ROLE.USER),
+  auth(USER_ROLE.USER, USER_ROLE.ADMIN),
   upload.fields([{ name: 'postImage' }]),
   validateImageFileRequest(ImageFilesArrayZodSchema),
   parseBody,
@@ -30,11 +30,17 @@ router.get(
   auth(USER_ROLE.ADMIN, USER_ROLE.USER),
   PostControllers.getSinglePost
 );
+
 router.put(
   '/:id',
   auth(USER_ROLE.ADMIN, USER_ROLE.USER),
   validateRequest(UpdatePostValidationSchema),
   PostControllers.updateSinglePost
+);
+router.delete(
+  '/:id',
+  auth(USER_ROLE.ADMIN, USER_ROLE.USER),
+  PostControllers.deleteSinglePost
 );
 router.put(
   '/post-comment/:id',
