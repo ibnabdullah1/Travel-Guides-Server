@@ -1,15 +1,11 @@
 import { RequestHandler } from 'express';
 import httpStatus from 'http-status';
-import AppError from '../../errors/AppError';
 import { catchAsync } from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { PostServices } from './post.service';
 
 const createPost = catchAsync(async (req, res) => {
-  if (!req.files) {
-    throw new AppError(400, 'Please upload an image');
-  }
-  const post = await PostServices.createPostIntoDB(req.body, req.files as any);
+  const post = await PostServices.createPostIntoDB(req.body);
 
   sendResponse(res, {
     success: true,

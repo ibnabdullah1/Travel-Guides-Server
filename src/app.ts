@@ -1,5 +1,6 @@
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+
 import express, { Application, NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
@@ -11,9 +12,7 @@ const app: Application = express();
 app.use(
   cors({
     origin: [
-      'http://localhost:3000',
       'http://localhost:3001',
-      'http://localhost:3003',
       'https://travel-guide-community.vercel.app',
     ],
     credentials: true,

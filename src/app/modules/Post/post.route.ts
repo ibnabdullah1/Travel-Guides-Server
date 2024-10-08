@@ -2,10 +2,6 @@ import express from 'express';
 import auth from '../../middlewares/auth';
 import validateRequest from '../../middlewares/validateRequest';
 
-import { parseBody } from '../../middlewares/bodyParser';
-import validateImageFileRequest from '../../middlewares/validateImageFileRequest';
-import { upload } from '../../utils/sendImageToCloudinary';
-import { ImageFilesArrayZodSchema } from '../../zod/image.validation';
 import { USER_ROLE } from '../User/user.constant';
 import { PostControllers } from './post.controller';
 import {
@@ -17,10 +13,6 @@ const router = express.Router();
 
 router.post(
   '/',
-  auth(USER_ROLE.USER, USER_ROLE.ADMIN),
-  upload.fields([{ name: 'postImage' }]),
-  validateImageFileRequest(ImageFilesArrayZodSchema),
-  parseBody,
   validateRequest(PostValidationSchema),
   PostControllers.createPost
 );

@@ -1,18 +1,9 @@
 import httpStatus from 'http-status';
 import AppError from '../../errors/AppError';
-import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
 import { TComment, TPost } from './post.interface';
 import { Post } from './post.model';
 
-const createPostIntoDB = async (payload: TPost, image: any) => {
-  if (image) {
-    const { postImage } = image;
-    const imageName = payload.title.toUpperCase();
-    const path = postImage[0].path;
-    // send image to cloudinary
-    const { secure_url } = await sendImageToCloudinary(imageName, path);
-    payload.image = secure_url as string;
-  }
+const createPostIntoDB = async (payload: TPost) => {
   const result = await Post.create(payload);
 
   return result;
